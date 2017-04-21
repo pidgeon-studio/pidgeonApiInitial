@@ -30,3 +30,8 @@ class TextMessage:
 
   def disconnectPhone(self):
     self.ser.close()
+  
+  def run(self):
+    self.connectPhone()
+    self.sendMessage()
+    self.disconnectPhone()

@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from .text_message import TextMessage
+from django.views.decorators.http import require_http_methods
+from .payload import Payload
 
+@require_http_methods(["POST"])
 def send(request):
-  sms = TextMessage("0727686700","Mesaj de test")
-  sms.connectPhone()
-  sms.sendMessage()
-  sms.disconnectPhone()
+  p = Payload(request.body)
+  sms = TextMessage(p.recipient, p.message)
+  sms.run()
 
-  return HttpResponse('{"test": true}', content_type='application/json');
+  return HttpResponse(request.body, content_type='application/json');
