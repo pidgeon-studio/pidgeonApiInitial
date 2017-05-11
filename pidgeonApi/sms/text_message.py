@@ -14,10 +14,13 @@ class TextMessage:
 
   def connectPhone(self):
     self.ser = serial.Serial('/dev/ttyUSB0', 460800, timeout=5)
+    print self.ser
     time.sleep(1)
 
   def sendMessage(self):
-    self.ser.write('ATZ\r')
+    self.ser.write('AT\r')
+    time.sleep(1)
+    self.ser.write('AT+CSCA="+40744946000",145\r')
     time.sleep(1)
     self.ser.write('AT+CMGF=1\r')
     time.sleep(1)
